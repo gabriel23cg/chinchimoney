@@ -27,23 +27,27 @@ def setCoin():
 		image_label.config(image=image_label.img)
 	image_label.pack()
 
-def setMessage():
+def setStage():
 	if(stage.get()==0):
-		labelStage = Label(displayText, text="Selecciona la cantidad de monedas")
-	elif(stage.get()==1):
-		labelStage = Label(displayText, text="Selecciona las monedas que cres que tiene Computer")
-	elif(stage.get()==2):
-		labelStage = Label(displayText, text="Computer dice: En total hay X monedas")
+		labelStage.set("Selecciona la cantidad de monedas")
+	elif(stage.get()==1 and match.get()%2==1):
+		labelStage.set("Selecciona las monedas que cres que tiene Computer")
+	elif(stage.get()==2 and match.get()%2==1):
+		labelStage.set("Computer dice: En total hay X monedas")
+	elif(stage.get()==1 and match.get()%2==0):
+		labelStage.set("Computer dice: En total hay X monedas")
+	elif(stage.get()==2 and match.get()%2==0):
+		labelStage.set("Selecciona las monedas que cres que tiene Computer")
 	elif(stage.get()==3):
-		labelStage = Label(displayText, text="Había X monedas!")
+		labelStage.set("Había X monedas!")
 	elif(stage.get()==4):
-		labelStage = Label(displayText, text="X ha ganado.")
+		labelStage.set("X ha ganado.")
+		match.set(match.get()+1)
 		stage.set(-1)
-	labelStage.pack()
 
 def addStage():
 	stage.set(stage.get()+1)
-	setMessage()
+	setStage()
 
 
 root = Tk()
@@ -51,6 +55,8 @@ userCoin = IntVar()
 computerCoin = IntVar()
 match = IntVar()
 stage = IntVar()
+labelStage = StringVar()
+labelStage.set("Selecciona la cantidad de monedas")
 stage.set(0) 
 match.set(1)
 userCoin.set(1)
@@ -102,8 +108,7 @@ computerImage = PhotoImage(file="hc.gif")
 Label(computerDisplay, image=computerImage).pack()
 header = PhotoImage(file="header.gif")
 Label(titleImage, image=header).pack()
-labelStage = Label(displayText, text="Selecciona la cantidad de monedas")
-labelStage.pack()
+Label(displayText, textvariable=labelStage).pack()
 # fin
 root.mainloop()
 
