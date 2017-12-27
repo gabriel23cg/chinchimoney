@@ -1,10 +1,10 @@
 from tkinter import *
 def addCoin():
-	if (userCoin.get()<=3):
+	if (userCoin.get()<3):
 		userCoin.set(userCoin.get()+1)
 	setCoin()
 def subtractCoin():
-	if (userCoin.get()>=0):
+	if (userCoin.get()>0):
 		userCoin.set(userCoin.get()-1)
 	setCoin()
 def setCoin():
