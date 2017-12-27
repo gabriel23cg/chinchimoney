@@ -4,8 +4,13 @@ def addCoin():
 		userCoin.set(userCoin.get()+1)
 	setCoin()
 def subtractCoin():
-	if (userCoin.get()>0):
-		userCoin.set(userCoin.get()-1)
+	if (match.get()==1):	
+		if (userCoin.get()>1):
+			userCoin.set(userCoin.get()-1)
+	else:
+		if (userCoin.get()>0):
+			userCoin.set(userCoin.get()-1)
+
 	setCoin()
 def setCoin():
 	if(userCoin.get()==0):
@@ -20,12 +25,16 @@ def setCoin():
 	elif(userCoin.get()==3):
 		image_label.img = PhotoImage(file="user3.gif")
 		image_label.config(image=image_label.img)
-	#Label(userDisplay, image=userImage).pack()
 	image_label.pack()
 
 root = Tk()
 userCoin = IntVar()
-userCoin.set(0)
+computerCoin = IntVar()
+match = IntVar()
+stage = IntVar()
+stage.set(0) 
+match.set(1)
+userCoin.set(1)
 root.title("Chinchimoney")
 root.resizable(0,0)
 #root.iconbitmap('icon.ico') #icono
@@ -40,7 +49,8 @@ scoreBoard.config(bd=3,relief="sunken")
 displayText = Frame(root)
 displayText.grid(row=2,column=0,columnspan=2)
 displayText.config(width= 256, height=32)
-displayText.config(bd=3,relief="sunken")
+displayText.config(bd=3)
+Label(displayText, text="Selecciona la cantidad de monedas").pack()
 userUP = Frame(root)
 userUP.grid(row=3,column=0)
 userUP.config(width= 128, height=32)
@@ -67,10 +77,10 @@ Button(userDOWN,text="Menos",command=subtractCoin).pack()
 Label(buttonFrame).pack()
 Button(buttonFrame,text="Aceptar",command="").pack()
 Label(buttonFrame).pack()
-userImage = PhotoImage(file="user0.gif")
+userImage = PhotoImage(file="user1.gif")
 image_label = Label(userDisplay, image=userImage)
 image_label.pack()
-computerImage = PhotoImage(file="computer3.gif")
+computerImage = PhotoImage(file="hc.gif")
 Label(computerDisplay, image=computerImage).pack()
 header = PhotoImage(file="header.gif")
 Label(titleImage, image=header).pack()
