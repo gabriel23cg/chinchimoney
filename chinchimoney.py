@@ -27,6 +27,25 @@ def setCoin():
 		image_label.config(image=image_label.img)
 	image_label.pack()
 
+def setMessage():
+	if(stage.get()==0):
+		labelStage = Label(displayText, text="Selecciona la cantidad de monedas")
+	elif(stage.get()==1):
+		labelStage = Label(displayText, text="Selecciona las monedas que cres que tiene Computer")
+	elif(stage.get()==2):
+		labelStage = Label(displayText, text="Computer dice: En total hay X monedas")
+	elif(stage.get()==3):
+		labelStage = Label(displayText, text="Había X monedas!")
+	elif(stage.get()==4):
+		labelStage = Label(displayText, text="X ha ganado.")
+		stage.set(-1)
+	labelStage.pack()
+
+def addStage():
+	stage.set(stage.get()+1)
+	setMessage()
+
+
 root = Tk()
 userCoin = IntVar()
 computerCoin = IntVar()
@@ -50,7 +69,6 @@ displayText = Frame(root)
 displayText.grid(row=2,column=0,columnspan=2)
 displayText.config(width= 256, height=32)
 displayText.config(bd=3)
-Label(displayText, text="Selecciona la cantidad de monedas").pack()
 userUP = Frame(root)
 userUP.grid(row=3,column=0)
 userUP.config(width= 128, height=32)
@@ -75,7 +93,7 @@ buttonFrame.config(width= 256, height=32)
 Button(userUP,text="Más",command=addCoin).pack()
 Button(userDOWN,text="Menos",command=subtractCoin).pack()
 Label(buttonFrame).pack()
-Button(buttonFrame,text="Aceptar",command="").pack()
+Button(buttonFrame,text="Aceptar",command=addStage).pack()
 Label(buttonFrame).pack()
 userImage = PhotoImage(file="user1.gif")
 image_label = Label(userDisplay, image=userImage)
@@ -84,6 +102,8 @@ computerImage = PhotoImage(file="hc.gif")
 Label(computerDisplay, image=computerImage).pack()
 header = PhotoImage(file="header.gif")
 Label(titleImage, image=header).pack()
+labelStage = Label(displayText, text="Selecciona la cantidad de monedas")
+labelStage.pack()
 # fin
 root.mainloop()
 
