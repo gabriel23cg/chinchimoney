@@ -29,6 +29,7 @@ def setCoin():
 
 def setStage():
 	if(stage.get()==0):
+		labelMatch.set("Partida {}".format(match.get()))
 		labelStage.set("Selecciona la cantidad de monedas")
 	elif(stage.get()==1 and match.get()%2==1):
 		userChoice.set(userCoin.get())
@@ -62,10 +63,12 @@ stage = IntVar()
 predictUser = IntVar()
 userChoice = IntVar()
 labelStage = StringVar()
+labelMatch = StringVar()
 labelStage.set("Selecciona la cantidad de monedas")
 stage.set(0) 
 match.set(1)
 userCoin.set(1)
+labelMatch.set("Partida {}".format(match.get()))
 root.title("Chinchimoney")
 root.resizable(0,0)
 #root.iconbitmap('icon.ico') #icono
@@ -76,7 +79,7 @@ titleImage.config(bd=5)
 scoreBoard = Frame(root)
 scoreBoard.grid(row=1,column=0,columnspan=2)
 scoreBoard.config(width= 256, height=32)
-scoreBoard.config(bd=3,relief="sunken")
+scoreBoard.config(bd=5)
 displayText = Frame(root)
 displayText.grid(row=2,column=0,columnspan=2)
 displayText.config(width= 256, height=32)
@@ -115,6 +118,7 @@ Label(computerDisplay, image=computerImage).pack()
 header = PhotoImage(file="header.gif")
 Label(titleImage, image=header).pack()
 Label(displayText, textvariable=labelStage).pack()
+Label(scoreBoard, textvariable=labelMatch).pack()
 # fin
 root.mainloop()
 
