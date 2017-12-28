@@ -31,14 +31,18 @@ def setStage():
 	if(stage.get()==0):
 		labelStage.set("Selecciona la cantidad de monedas")
 	elif(stage.get()==1 and match.get()%2==1):
+		userChoice.set(userCoin.get())
 		labelStage.set("Selecciona las monedas que cres que tiene Computer")
 	elif(stage.get()==2 and match.get()%2==1):
+		predictUser.set(userCoin.get())
 		labelStage.set("Computer dice: En total hay X monedas")
+		predictUser.set(userCoin.get())
 	elif(stage.get()==1 and match.get()%2==0):
 		labelStage.set("Computer dice: En total hay X monedas")
 	elif(stage.get()==2 and match.get()%2==0):
 		labelStage.set("Selecciona las monedas que cres que tiene Computer")
 	elif(stage.get()==3):
+		predictUser.set(userCoin.get())
 		labelStage.set("Había X monedas!")
 	elif(stage.get()==4):
 		labelStage.set("X ha ganado.")
@@ -55,6 +59,8 @@ userCoin = IntVar()
 computerCoin = IntVar()
 match = IntVar()
 stage = IntVar()
+predictUser = IntVar()
+userChoice = IntVar()
 labelStage = StringVar()
 labelStage.set("Selecciona la cantidad de monedas")
 stage.set(0) 
