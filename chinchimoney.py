@@ -71,8 +71,8 @@ def setStage():
 		labelStage.set("{} ha ganado.".format(labelWinner.get()))
 		image_computer.img = PhotoImage(file="hc.gif")
 		image_computer.config(image=image_computer.img)
-		gameOver()
 		labelMatch.set("Partida {} \n {} - {}".format(match.get(),userWinnings.get(),computerWinnings.get()))
+		gameOver()
 		match.set(match.get()+1)
 		stage.set(-1)
 
@@ -153,7 +153,7 @@ def gameOver():
 		buttonOK.pack()
 		computerWinnings.set(0)
 		userWinnings.set(0)
-		match.set(1)
+		match.set(0)
 
 root = Tk()
 userCoin = IntVar()
