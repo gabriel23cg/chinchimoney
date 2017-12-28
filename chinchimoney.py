@@ -59,12 +59,13 @@ def setStage():
 		buttonDOWN.config(state=DISABLED)
 		buttonUP.config(state=DISABLED)
 		userPredict.set(userCoin.get()+userChoice.get())
-		realChoice.set(userChoice.get()+computerChoice.get())
-		labelStage.set("Había {} monedas!".format(realChoice.get()))
+		realCoin.set(userChoice.get()+computerChoice.get())
+		labelStage.set("Había {} monedas!".format(realCoin.get()))
 	elif(stage.get()==4):
 		buttonDOWN.config(state=DISABLED)
 		buttonUP.config(state=DISABLED)
-		labelStage.set("X ha ganado.")
+		setWinner()
+		labelStage.set("{} ha ganado.".format(labelWinner.get()))
 		match.set(match.get()+1)
 		stage.set(-1)
 
@@ -99,6 +100,15 @@ def setComputerPredict():
 	elif (match.get()%2==0):
 		computerPredict.set(computerChoice.get()+random.randrange(0,4))
 
+def setWinner():
+	if (userPredict.get()==realCoin.get() and userPredict.get()!=computerPredict.get()):
+		labelWinner.set("Tú")
+		userWinnings.set(userWinnings.get()+1)
+	elif (computerPredict.get()==realCoin.get() and userPredict.get()!=computerPredict.get()):
+		labelWinner.set("Computer")
+		computerWinnings.set(computerWinnings.get()+1)
+	else:
+		labelWinner.set("Nadie")
 
 root = Tk()
 userCoin = IntVar()
@@ -109,11 +119,12 @@ userChoice = IntVar()
 userPredict = IntVar()
 computerChoice = IntVar()
 computerPredict = IntVar()
-realChoice = IntVar()
+realCoin = IntVar()
 userWinnings = IntVar()
 computerWinnings = IntVar()
 labelStage = StringVar()
 labelMatch = StringVar()
+labelWinner = StringVar()
 labelStage.set("Selecciona la cantidad de monedas")
 userWinnings.set(0)
 computerWinnings.set(0)
