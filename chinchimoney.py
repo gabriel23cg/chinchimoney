@@ -32,6 +32,7 @@ def setStage():
 	if(stage.get()==0):
 		buttonDOWN.config(state=NORMAL)
 		buttonUP.config(state=NORMAL)
+		buttonOK.config(text="Aceptar")
 		labelMatch.set("Partida {} \n {} - {}".format(match.get(),userWinnings.get(),computerWinnings.get()))
 		labelStage.set("Selecciona la cantidad de monedas")
 	elif(stage.get()==1 and match.get()%2==1):
@@ -70,6 +71,8 @@ def setStage():
 		labelStage.set("{} ha ganado.".format(labelWinner.get()))
 		image_computer.img = PhotoImage(file="hc.gif")
 		image_computer.config(image=image_computer.img)
+		gameOver()
+		labelMatch.set("Partida {} \n {} - {}".format(match.get(),userWinnings.get(),computerWinnings.get()))
 		match.set(match.get()+1)
 		stage.set(-1)
 
@@ -106,7 +109,7 @@ def setComputerPredict():
 
 def setWinner():
 	if (userPredict.get()==realCoin.get() and userPredict.get()!=computerPredict.get()):
-		labelWinner.set("Tú")
+		labelWinner.set("Usuario")
 		userWinnings.set(userWinnings.get()+1)
 	elif (computerPredict.get()==realCoin.get() and userPredict.get()!=computerPredict.get()):
 		labelWinner.set("Computer")
@@ -144,6 +147,13 @@ def showUserCoin():
 		image_label.config(image=image_label.img)
 	image_label.pack()
 
+def gameOver():
+	if (userWinnings.get()==5 or computerWinnings.get()==5):
+		buttonOK.config(text="Nueva Partida")
+		buttonOK.pack()
+		computerWinnings.set(0)
+		userWinnings.set(0)
+		match.set(1)
 
 root = Tk()
 userCoin = IntVar()
@@ -208,7 +218,8 @@ buttonDOWN = Button(userDOWN,text="Menos",command=subtractCoin)
 buttonUP.pack()
 buttonDOWN.pack()
 Label(buttonFrame).pack()
-Button(buttonFrame,text="Aceptar",command=addStage).pack()
+buttonOK = Button(buttonFrame,text="Aceptar",command=addStage)
+buttonOK.pack()
 Label(buttonFrame).pack()
 userImage = PhotoImage(file="user1.gif")
 image_label = Label(userDisplay, image=userImage)
