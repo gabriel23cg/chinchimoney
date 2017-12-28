@@ -185,7 +185,7 @@ userCoin.set(1)
 labelMatch.set("Partida {} \n {} - {}".format(match.get(),userWinnings.get(),computerWinnings.get()))
 root.title("Chinchimoney")
 root.resizable(0,0)
-#root.iconbitmap('icon.ico') #icono
+root.iconbitmap('icon.ico')
 titleImage = Frame(root)
 titleImage.grid(row=0,column=0,columnspan=2)
 titleImage.config(width= 256, height=64)
@@ -205,11 +205,11 @@ userUP.config(bd=5)
 userDisplay = Frame(root)
 userDisplay.grid(row=4,column=0)
 userDisplay.config(width= 128, height=192)
-#userDisplay.config(bd=3,relief="sunken")
+
 computerDisplay = Frame(root)
 computerDisplay.grid(row=4,column=1)
 computerDisplay.config(width= 128, height=192)
-#computerDisplay.config(bd=3,relief="sunken")
+
 userDOWN = Frame(root)
 userDOWN.grid(row=5,column=0)
 userDOWN.config(width= 128, height=32)
@@ -217,8 +217,6 @@ userDOWN.config(bd=5)
 buttonFrame = Frame(root)
 buttonFrame.grid(row=6,column=0,columnspan=2)
 buttonFrame.config(width= 256, height=32)
-#buttonFrame.config(bd=3,relief="sunken")
-
 buttonUP = Button(userUP,text="Más",command=addCoin)
 buttonDOWN = Button(userDOWN,text="Menos",command=subtractCoin)
 buttonUP.pack()
@@ -237,10 +235,4 @@ header = PhotoImage(file="header.gif")
 Label(titleImage, image=header).pack()
 Label(displayText, textvariable=labelStage).pack()
 Label(scoreBoard, textvariable=labelMatch).pack()
-# fin
 root.mainloop()
-
-
-
-
-### notas: 10 9 9 10 10 6
