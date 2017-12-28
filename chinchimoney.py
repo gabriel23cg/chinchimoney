@@ -60,12 +60,16 @@ def setStage():
 		buttonUP.config(state=DISABLED)
 		userPredict.set(userCoin.get()+userChoice.get())
 		realCoin.set(userChoice.get()+computerChoice.get())
+		showUserCoin()
+		showComputerCoin()
 		labelStage.set("Había {} monedas!".format(realCoin.get()))
 	elif(stage.get()==4):
 		buttonDOWN.config(state=DISABLED)
 		buttonUP.config(state=DISABLED)
 		setWinner()
 		labelStage.set("{} ha ganado.".format(labelWinner.get()))
+		image_computer.img = PhotoImage(file="hc.gif")
+		image_computer.config(image=image_computer.img)
 		match.set(match.get()+1)
 		stage.set(-1)
 
@@ -109,6 +113,37 @@ def setWinner():
 		computerWinnings.set(computerWinnings.get()+1)
 	else:
 		labelWinner.set("Nadie")
+
+def showComputerCoin():
+	if(computerChoice.get()==0):
+		image_computer.img = PhotoImage(file="user0.gif")
+		image_computer.config(image=image_computer.img)
+	elif(computerChoice.get()==1):
+		image_computer.img = PhotoImage(file="user1.gif")
+		image_computer.config(image=image_computer.img)
+	elif(computerChoice.get()==2):
+		image_computer.img = PhotoImage(file="user2.gif")
+		image_computer.config(image=image_computer.img)
+	elif(computerChoice.get()==3):
+		image_computer.img = PhotoImage(file="user3.gif")
+		image_computer.config(image=image_computer.img)
+	image_computer.pack()
+
+def showUserCoin():
+	if(userChoice.get()==0):
+		image_label.img = PhotoImage(file="user0.gif")
+		image_label.config(image=image_label.img)
+	elif(userChoice.get()==1):
+		image_label.img = PhotoImage(file="user1.gif")
+		image_label.config(image=image_label.img)
+	elif(userChoice.get()==2):
+		image_label.img = PhotoImage(file="user2.gif")
+		image_label.config(image=image_label.img)
+	elif(userChoice.get()==3):
+		image_label.img = PhotoImage(file="user3.gif")
+		image_label.config(image=image_label.img)
+	image_label.pack()
+
 
 root = Tk()
 userCoin = IntVar()
@@ -179,7 +214,8 @@ userImage = PhotoImage(file="user1.gif")
 image_label = Label(userDisplay, image=userImage)
 image_label.pack()
 computerImage = PhotoImage(file="hc.gif")
-Label(computerDisplay, image=computerImage).pack()
+image_computer = Label(computerDisplay, image=computerImage)
+image_computer.pack()
 header = PhotoImage(file="header.gif")
 Label(titleImage, image=header).pack()
 Label(displayText, textvariable=labelStage).pack()
