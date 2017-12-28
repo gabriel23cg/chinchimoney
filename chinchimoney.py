@@ -1,4 +1,5 @@
 from tkinter import *
+import random
 def addCoin():
 	if (userCoin.get()<3):
 		userCoin.set(userCoin.get()+1)
@@ -37,17 +38,19 @@ def setStage():
 		buttonDOWN.config(state=NORMAL)
 		buttonUP.config(state=NORMAL)
 		userChoice.set(userCoin.get())
+		setComputerChoice()
 		labelStage.set("Selecciona las monedas que cres que tiene Computer")
 	elif(stage.get()==2 and match.get()%2==1):
 		buttonDOWN.config(state=DISABLED)
 		buttonUP.config(state=DISABLED)
-		predictUser.set(userCoin.get())
-		labelStage.set("Computer dice: En total hay X monedas")
-		predictUser.set(userCoin.get())
+		userPredict.set(userCoin.get()+userChoice.get())
+		setComputerPredict()
+		labelStage.set("Computer dice: En total hay {} monedas".format(computerPredict.get()))
 	elif(stage.get()==1 and match.get()%2==0):
 		buttonDOWN.config(state=DISABLED)
 		buttonUP.config(state=DISABLED)
-		labelStage.set("Computer dice: En total hay X monedas")
+		setComputerPredict()
+		labelStage.set("Computer dice: En total hay {} monedas".format(computerPredict.get()))
 	elif(stage.get()==2 and match.get()%2==0):
 		buttonDOWN.config(state=NORMAL)
 		buttonUP.config(state=NORMAL)
@@ -55,8 +58,9 @@ def setStage():
 	elif(stage.get()==3):
 		buttonDOWN.config(state=DISABLED)
 		buttonUP.config(state=DISABLED)
-		predictUser.set(userCoin.get())
-		labelStage.set("Había X monedas!")
+		userPredict.set(userCoin.get()+userChoice.get())
+		realChoice.set(userChoice.get()+computerChoice.get())
+		labelStage.set("Había {} monedas!".format(realChoice.get()))
 	elif(stage.get()==4):
 		buttonDOWN.config(state=DISABLED)
 		buttonUP.config(state=DISABLED)
@@ -70,14 +74,42 @@ def addStage():
 	buttonUP.pack()
 	buttonDOWN.pack()
 
+def setComputerChoice():
+	if (match.get()==1):
+		computerChoice.set(random.randrange(1,4))
+	else:
+		computerChoice.set(random.randrange(0,4))
+
+def setComputerPredict():
+	if (match.get()%2==1):
+		if (userPredict.get()==0):
+			computerPredict.set(computerChoice.get()+0)
+		elif (userPredict.get()==1):
+			computerPredict.set(computerChoice.get()+random.randrange(0,2))
+		elif (userPredict.get()==2):
+			computerPredict.set(computerChoice.get()+random.randrange(0,3))
+		elif (userPredict.get()==3):
+			computerPredict.set(computerChoice.get()+random.randrange(0,4))
+		elif (userPredict.get()==4):
+			computerPredict.set(computerChoice.get()+random.randrange(1,4))
+		elif (userPredict.get()==5):
+			computerPredict.set(computerChoice.get()+random.randrange(2,4))
+		elif (userPredict.get()==6):
+			computerPredict.set(computerChoice.get()+3)
+	elif (match.get()%2==0):
+		computerPredict.set(computerChoice.get()+random.randrange(0,4))
+
 
 root = Tk()
 userCoin = IntVar()
 computerCoin = IntVar()
 match = IntVar()
 stage = IntVar()
-predictUser = IntVar()
 userChoice = IntVar()
+userPredict = IntVar()
+computerChoice = IntVar()
+computerPredict = IntVar()
+realChoice = IntVar()
 userWinnings = IntVar()
 computerWinnings = IntVar()
 labelStage = StringVar()
