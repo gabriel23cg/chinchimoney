@@ -138,15 +138,19 @@ def showUserCoin():
 	if(userChoice.get()==0):
 		image_label.img = PhotoImage(file="user0.gif")
 		image_label.config(image=image_label.img)
+		userCoin.set(0)
 	elif(userChoice.get()==1):
 		image_label.img = PhotoImage(file="user1.gif")
 		image_label.config(image=image_label.img)
+		userCoin.set(1)
 	elif(userChoice.get()==2):
 		image_label.img = PhotoImage(file="user2.gif")
 		image_label.config(image=image_label.img)
+		userCoin.set(2)
 	elif(userChoice.get()==3):
 		image_label.img = PhotoImage(file="user3.gif")
 		image_label.config(image=image_label.img)
+		userCoin.set(3)
 	image_label.pack()
 
 def gameOver():
