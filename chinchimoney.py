@@ -29,23 +29,37 @@ def setCoin():
 
 def setStage():
 	if(stage.get()==0):
+		buttonDOWN.config(state=NORMAL)
+		buttonUP.config(state=NORMAL)
 		labelMatch.set("Partida {}".format(match.get()))
 		labelStage.set("Selecciona la cantidad de monedas")
 	elif(stage.get()==1 and match.get()%2==1):
+		buttonDOWN.config(state=NORMAL)
+		buttonUP.config(state=NORMAL)
 		userChoice.set(userCoin.get())
 		labelStage.set("Selecciona las monedas que cres que tiene Computer")
 	elif(stage.get()==2 and match.get()%2==1):
+		buttonDOWN.config(state=DISABLED)
+		buttonUP.config(state=DISABLED)
 		predictUser.set(userCoin.get())
 		labelStage.set("Computer dice: En total hay X monedas")
 		predictUser.set(userCoin.get())
 	elif(stage.get()==1 and match.get()%2==0):
+		buttonDOWN.config(state=DISABLED)
+		buttonUP.config(state=DISABLED)
 		labelStage.set("Computer dice: En total hay X monedas")
 	elif(stage.get()==2 and match.get()%2==0):
+		buttonDOWN.config(state=NORMAL)
+		buttonUP.config(state=NORMAL)
 		labelStage.set("Selecciona las monedas que cres que tiene Computer")
 	elif(stage.get()==3):
+		buttonDOWN.config(state=DISABLED)
+		buttonUP.config(state=DISABLED)
 		predictUser.set(userCoin.get())
 		labelStage.set("Había X monedas!")
 	elif(stage.get()==4):
+		buttonDOWN.config(state=DISABLED)
+		buttonUP.config(state=DISABLED)
 		labelStage.set("X ha ganado.")
 		match.set(match.get()+1)
 		stage.set(-1)
@@ -53,6 +67,8 @@ def setStage():
 def addStage():
 	stage.set(stage.get()+1)
 	setStage()
+	buttonUP.pack()
+	buttonDOWN.pack()
 
 
 root = Tk()
@@ -105,8 +121,10 @@ buttonFrame.grid(row=6,column=0,columnspan=2)
 buttonFrame.config(width= 256, height=32)
 #buttonFrame.config(bd=3,relief="sunken")
 
-Button(userUP,text="Más",command=addCoin).pack()
-Button(userDOWN,text="Menos",command=subtractCoin).pack()
+buttonUP = Button(userUP,text="Más",command=addCoin)
+buttonDOWN = Button(userDOWN,text="Menos",command=subtractCoin)
+buttonUP.pack()
+buttonDOWN.pack()
 Label(buttonFrame).pack()
 Button(buttonFrame,text="Aceptar",command=addStage).pack()
 Label(buttonFrame).pack()
