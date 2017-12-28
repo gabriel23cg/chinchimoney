@@ -1,5 +1,6 @@
 from tkinter import *
 import random
+
 def addCoin():
 	if (userCoin.get()<3):
 		userCoin.set(userCoin.get()+1)
@@ -50,6 +51,7 @@ def setStage():
 	elif(stage.get()==1 and match.get()%2==0):
 		buttonDOWN.config(state=DISABLED)
 		buttonUP.config(state=DISABLED)
+		userChoice.set(userCoin.get())
 		setComputerPredict()
 		labelStage.set("Computer dice: En total hay {} monedas".format(computerPredict.get()))
 	elif(stage.get()==2 and match.get()%2==0):
