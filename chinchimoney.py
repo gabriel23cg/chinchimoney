@@ -21,46 +21,46 @@ def show_coin(label, coin_number, display):
     label.img = PhotoImage(file=image_name)
     label.config(image=label.img)
 
+def enable_selection():
+	button_down.config(state=NORMAL)
+	button_up.config(state=NORMAL)
+
+def disable_selection():
+	button_down.config(state=DISABLED)
+	button_up.config(state=DISABLED)
+
 def set_stage():
 	if(stage.get()==0):
-		button_down.config(state=NORMAL)
-		button_up.config(state=NORMAL)
+		enable_selection()
 		button_ok.config(text="Aceptar")
 		label_match.set("Partida {} \n {} - {}".format(match.get(),user_winnings.get(),computer_winnings.get()))
 		label_stage.set("Selecciona la cantidad de monedas")
 	elif(stage.get()==1 and match.get()%2==1):
-		button_down.config(state=NORMAL)
-		button_up.config(state=NORMAL)
+		enable_selection()
 		user_choice.set(coin_number.get())
 		set_computer_choice()
 		label_stage.set("Selecciona las monedas que cres que tiene Computer")
 	elif(stage.get()==2 and match.get()%2==1):
-		button_down.config(state=DISABLED)
-		button_up.config(state=DISABLED)
+		disable_selection()
 		user_predict.set(coin_number.get()+user_choice.get())
 		set_computer_predict()
 		label_stage.set("Computer dice: En total hay {} monedas".format(computer_predict.get()))
 	elif(stage.get()==1 and match.get()%2==0):
-		button_down.config(state=DISABLED)
-		button_up.config(state=DISABLED)
+		disable_selection()
 		user_choice.set(coin_number.get())
 		set_computer_predict()
 		label_stage.set("Computer dice: En total hay {} monedas".format(computer_predict.get()))
 	elif(stage.get()==2 and match.get()%2==0):
-		button_down.config(state=NORMAL)
-		button_up.config(state=NORMAL)
+		enable_selection()
 		label_stage.set("Selecciona las monedas que cres que tiene Computer")
 	elif(stage.get()==3):
-		button_down.config(state=DISABLED)
-		button_up.config(state=DISABLED)
+		disable_selection()
 		user_predict.set(coin_number.get()+user_choice.get())
 		real_coin.set(user_choice.get()+computer_choice.get())
 		show_user_choice()
 		show_computer_coin()
 		label_stage.set("Había {} monedas!".format(real_coin.get()))
 	elif(stage.get()==4):
-		button_down.config(state=DISABLED)
-		button_up.config(state=DISABLED)
 		set_winner()
 		label_stage.set("{} ha ganado.".format(label_winner.get()))
 		image_computer.img = PhotoImage(file="hc.gif")
@@ -82,7 +82,9 @@ def set_computer_choice():
 	else:
 		computer_choice.set(random.randrange(0,4))
 
-def set_computer_predict():
+def set_computer_predict():		#Computer prediction is based on the information gived by the user,
+								#eg. if user said 6 coins, the only posibility of that is if user had 3 coins
+								#so computer will predict 3 plus the coins that computer has chosen.
 	if (match.get()%2==1):
 		if (user_predict.get()==0):
 			computer_predict.set(computer_choice.get()+0)
@@ -117,7 +119,7 @@ def show_computer_coin():
 def show_user_choice():
 	show_coin(image_label, user_choice.get(), "user")
 	coin_number.set(user_choice.get())
-	
+
 def game_over():
 	if (user_winnings.get()==5 or computer_winnings.get()==5):
 		button_ok.config(text="Nueva Partida")
@@ -128,32 +130,33 @@ def game_over():
 
 
 root = Tk()
+root.title("Chinchimoney")
+root.resizable(0,0)	#window cant be resizable.
+root.iconbitmap('icon.ico')
 
-coin_number = IntVar()
+coin_number = IntVar()	#Number of current coins on the users display.
 match = IntVar()
-stage = IntVar()
-user_choice = IntVar()
-user_predict = IntVar()
-computer_choice = IntVar()
-computer_predict = IntVar()
-real_coin = IntVar()
-user_winnings = IntVar()
-computer_winnings = IntVar()
-label_stage = StringVar()
-label_match = StringVar()
-label_winner = StringVar()
+stage = IntVar()	#stages through the match.
+user_choice = IntVar()	#number of coins selected by user.
+user_predict = IntVar()	#number of total coins predicted by user.
+computer_choice = IntVar() #number of coins selected by the computer.
+computer_predict = IntVar()	#number of total coins predicted by the computer.
+real_coin = IntVar()	#the real amount of coins, coins in user plus coins in the computer.
+user_winnings = IntVar()	#winning counter.
+computer_winnings = IntVar()	#winning counter also.
+label_stage = StringVar()	#string that guides the user through all stages.
+label_match = StringVar()	#string that shows the match and the scoreboard.
+label_winner = StringVar()	#string that shows the winner.
 
-label_stage.set("Selecciona la cantidad de monedas")
+label_stage.set("Selecciona la cantidad de monedas") #setting variables to the start of the game.
 user_winnings.set(0)
 computer_winnings.set(0)
 stage.set(0) 
 match.set(1)
 coin_number.set(1)
 label_match.set("Partida {} \n {} - {}".format(match.get(),user_winnings.get(),computer_winnings.get()))
-root.title("Chinchimoney")
-root.resizable(0,0)
-root.iconbitmap('icon.ico')
 
+#here starts the definition, by frames, of the GUI.
 title_image = Frame(root)
 title_image.grid(row=0,column=0,columnspan=2)
 title_image.config(width= 256, height=64)
@@ -183,7 +186,9 @@ user_down.config(bd=5)
 button_frame = Frame(root)
 button_frame.grid(row=6,column=0,columnspan=2)
 button_frame.config(width= 256, height=32)
+#here ends.
 
+#Initialiting GUI objets.
 button_up = Button(user_up,text="Más",command=add_coin)
 button_down = Button(user_down,text="Menos",command=subtract_coin)
 button_up.pack()
@@ -202,4 +207,5 @@ header = PhotoImage(file="header.gif")
 Label(title_image, image=header).pack()
 Label(display_text, textvariable=label_stage).pack()
 Label(score_board, textvariable=label_match).pack()
+
 root.mainloop()
