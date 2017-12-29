@@ -2,32 +2,24 @@ from tkinter import *
 import random
 
 def add_coin():
-	if (user_coin.get()<3):
-		user_coin.set(user_coin.get()+1)
-	set_coin()
+	if (coin_number.get()<3):
+		coin_number.set(coin_number.get()+1)
+	show_coin(image_label, coin_number.get(), "user")
+
 def subtract_coin():
 	if (match.get()==1):	
-		if (user_coin.get()>1):
-			user_coin.set(user_coin.get()-1)
+		if (coin_number.get()>1):
+			coin_number.set(coin_number.get()-1)
 	else:
-		if (user_coin.get()>0):
-			user_coin.set(user_coin.get()-1)
+		if (coin_number.get()>0):
+			coin_number.set(coin_number.get()-1)
 
-	set_coin()
-def set_coin():
-	if(user_coin.get()==0):
-		image_label.img = PhotoImage(file="user0.gif")
-		image_label.config(image=image_label.img)
-	elif(user_coin.get()==1):
-		image_label.img = PhotoImage(file="user1.gif")
-		image_label.config(image=image_label.img)
-	elif(user_coin.get()==2):
-		image_label.img = PhotoImage(file="user2.gif")
-		image_label.config(image=image_label.img)
-	elif(user_coin.get()==3):
-		image_label.img = PhotoImage(file="user3.gif")
-		image_label.config(image=image_label.img)
-	image_label.pack()
+	show_coin(image_label, coin_number.get(), "user")
+
+def show_coin(label, coin_number, display):
+    image_name = "{}{}.gif".format(display,coin_number)
+    label.img = PhotoImage(file=image_name)
+    label.config(image=label.img)
 
 def set_stage():
 	if(stage.get()==0):
@@ -39,19 +31,19 @@ def set_stage():
 	elif(stage.get()==1 and match.get()%2==1):
 		button_down.config(state=NORMAL)
 		button_up.config(state=NORMAL)
-		user_choice.set(user_coin.get())
+		user_choice.set(coin_number.get())
 		set_computer_choice()
 		label_stage.set("Selecciona las monedas que cres que tiene Computer")
 	elif(stage.get()==2 and match.get()%2==1):
 		button_down.config(state=DISABLED)
 		button_up.config(state=DISABLED)
-		user_predict.set(user_coin.get()+user_choice.get())
+		user_predict.set(coin_number.get()+user_choice.get())
 		set_computer_predict()
 		label_stage.set("Computer dice: En total hay {} monedas".format(computer_predict.get()))
 	elif(stage.get()==1 and match.get()%2==0):
 		button_down.config(state=DISABLED)
 		button_up.config(state=DISABLED)
-		user_choice.set(user_coin.get())
+		user_choice.set(coin_number.get())
 		set_computer_predict()
 		label_stage.set("Computer dice: En total hay {} monedas".format(computer_predict.get()))
 	elif(stage.get()==2 and match.get()%2==0):
@@ -61,9 +53,9 @@ def set_stage():
 	elif(stage.get()==3):
 		button_down.config(state=DISABLED)
 		button_up.config(state=DISABLED)
-		user_predict.set(user_coin.get()+user_choice.get())
+		user_predict.set(coin_number.get()+user_choice.get())
 		real_coin.set(user_choice.get()+computer_choice.get())
-		showuser_coin()
+		show_user_choice()
 		show_computer_coin()
 		label_stage.set("Había {} monedas!".format(real_coin.get()))
 	elif(stage.get()==4):
@@ -120,39 +112,12 @@ def set_winner():
 		label_winner.set("Nadie")
 
 def show_computer_coin():
-	if(computer_choice.get()==0):
-		image_computer.img = PhotoImage(file="user0.gif")
-		image_computer.config(image=image_computer.img)
-	elif(computer_choice.get()==1):
-		image_computer.img = PhotoImage(file="user1.gif")
-		image_computer.config(image=image_computer.img)
-	elif(computer_choice.get()==2):
-		image_computer.img = PhotoImage(file="user2.gif")
-		image_computer.config(image=image_computer.img)
-	elif(computer_choice.get()==3):
-		image_computer.img = PhotoImage(file="user3.gif")
-		image_computer.config(image=image_computer.img)
-	image_computer.pack()
+	show_coin(image_computer, computer_choice.get(), "computer")
 
-def showuser_coin():
-	if(user_choice.get()==0):
-		image_label.img = PhotoImage(file="user0.gif")
-		image_label.config(image=image_label.img)
-		user_coin.set(0)
-	elif(user_choice.get()==1):
-		image_label.img = PhotoImage(file="user1.gif")
-		image_label.config(image=image_label.img)
-		user_coin.set(1)
-	elif(user_choice.get()==2):
-		image_label.img = PhotoImage(file="user2.gif")
-		image_label.config(image=image_label.img)
-		user_coin.set(2)
-	elif(user_choice.get()==3):
-		image_label.img = PhotoImage(file="user3.gif")
-		image_label.config(image=image_label.img)
-		user_coin.set(3)
-	image_label.pack()
-
+def show_user_choice():
+	show_coin(image_label, user_choice.get(), "user")
+	coin_number.set(user_choice.get())
+	
 def game_over():
 	if (user_winnings.get()==5 or computer_winnings.get()==5):
 		button_ok.config(text="Nueva Partida")
@@ -164,7 +129,7 @@ def game_over():
 
 root = Tk()
 
-user_coin = IntVar()
+coin_number = IntVar()
 match = IntVar()
 stage = IntVar()
 user_choice = IntVar()
@@ -183,7 +148,7 @@ user_winnings.set(0)
 computer_winnings.set(0)
 stage.set(0) 
 match.set(1)
-user_coin.set(1)
+coin_number.set(1)
 label_match.set("Partida {} \n {} - {}".format(match.get(),user_winnings.get(),computer_winnings.get()))
 root.title("Chinchimoney")
 root.resizable(0,0)
